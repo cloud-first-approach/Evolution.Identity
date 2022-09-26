@@ -19,7 +19,7 @@ namespace IdentityService.Api.Controllers
             this._userManager = userManager;
         }
         
-        [HttpGet(Name = "GetState")]
+        [HttpGet(Name = "GetUser")]
         public async Task<IActionResult> Get([FromQuery]GetUserRequestModel request)
         {
            return Ok(_userManager.GetUser(request));
@@ -27,7 +27,7 @@ namespace IdentityService.Api.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromQuery] CreateUserRequestModel request)
+        public async Task<IActionResult> Post([FromBody] CreateUserRequestModel request)
         {
             return Ok(_userManager.AddUser(request));
         }

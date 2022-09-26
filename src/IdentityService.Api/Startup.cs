@@ -53,10 +53,10 @@ namespace IdentityService.Api
             //var authset = new AuthSettings();
             //Configuration.GetSection("AuthSettings").Bind(authset);
 
-            services.AddSingleton<ILoginStateRepository, LoginStateRepository>();
-            services.AddSingleton<IAuthManagerService, AuthManagerService>();
-            services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IUserManager, UserManager>();
+            services.AddScoped<ILoginStateRepository, LoginStateRepository>();
+            services.AddScoped<IAuthManagerService, AuthManagerService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserManager, UserManager>();
 
             services.AddJwtAuthentication(Configuration);
             services.AddHttpClient();
