@@ -56,6 +56,7 @@ namespace IdentityService.Api
             services.AddSingleton<ILoginStateRepository, LoginStateRepository>();
             services.AddSingleton<IAuthManagerService, AuthManagerService>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserManager, UserManager>();
 
             services.AddJwtAuthentication(Configuration);
             services.AddHttpClient();

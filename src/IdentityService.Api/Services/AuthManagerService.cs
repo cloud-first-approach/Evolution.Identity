@@ -18,16 +18,20 @@ namespace IdentityService.Api.Services
 
         private readonly AuthSettings _authSettings;
         private readonly ILoginStateRepository _loginStateRepository;
+        private readonly IUserRepository _userRepository;
 
-        public AuthManagerService(IOptions<AuthSettings> authSettingOptions, ILoginStateRepository loginStateRepository)
+        public AuthManagerService(IOptions<AuthSettings> authSettingOptions, ILoginStateRepository loginStateRepository,IUserRepository userRepository)
         {
             _authSettings = authSettingOptions.Value;
             _loginStateRepository = loginStateRepository;
+            this._userRepository = userRepository;
         }
 
         public string Authenticate(string username, string password)
         {
-            if (!authenticatedUsers.Any(a => a.Key == username && a.Value == password))
+            var user = _userRepository.GetUser(username);
+            // TODO : for timebeing
+            if (user is null && !authenticatedUsers.Any(a => a.Key == username && a.Value == password))
             {
                 return null;
             }
