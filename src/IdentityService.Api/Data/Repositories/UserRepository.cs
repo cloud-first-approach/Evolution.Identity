@@ -12,13 +12,14 @@ namespace IdentityService.Api.Data.Repositories
         }
         public async Task CreateUser(User user)
         {
-           await dbcontext.Users.AddAsync(user);
-           dbcontext.SaveChanges();
+            await dbcontext.Users.AddAsync(user);
+            dbcontext.SaveChanges();
         }
 
-        public async Task<User> GetUser(string username)
+        public async Task<User?> GetUser(string username)
         {
-             return await Task.Run(()=> dbcontext.Users.FirstOrDefault(user=> user.Username == username)); 
+            var user = await Task.Run(() => dbcontext.Users.FirstOrDefault(user => user.Username == username));
+            return user;
         }
     }
 }

@@ -1,5 +1,7 @@
 using IdentityService.Api.Data.Models;
 using IdentityService.Api.Data.Repositories;
+using IdentityService.Api.Models.Users;
+using IdentityService.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,36 +12,24 @@ namespace IdentityService.Api.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-        private readonly ILoginStateRepository identityUserRepository;
+        private readonly IUserManager _userManager;
 
-        public UserController(IHttpClientFactory httpClientFactory, ILoginStateRepository identityUserRepository)
+        public UserController(IUserManager userManager)
         {
-            this._httpClientFactory = httpClientFactory;
-            this.identityUserRepository = identityUserRepository;
+            this._userManager = userManager;
         }
         
         [HttpGet(Name = "GetState")]
-        public async Task<IActionResult> Get([FromQuery]string username)
+        public async Task<IActionResult> Get([FromQuery]GetUserRequestModel request)
         {
-            //var dapr = _httpClientFactory.CreateClient("dapr");
-            //var msg = new HttpRequestMessage(HttpMethod.Get, "/v1.0/invoke/");
-            return Ok(await this.identityUserRepository.GetUserLoginStateAsync(username));
+           return Ok(_userManager.GetUser(request));
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromQuery] string username)
+        public async Task<IActionResult> Post([FromQuery] CreateUserRequestModel request)
         {
-            await this.identityUserRepository.SaveUserLoginStateAsync(new LoginStateModel()
-            {
-                Username = username,
-                Token = "",
-                LastGenerated = DateTime.Now.ToString()
-            });
-            //var dapr = _httpClientFactory.CreateClient("dapr");
-            //var msg = new HttpRequestMessage(HttpMethod.Get, "/v1.0/invoke/");
-            return Ok();
+            return Ok(_userManager.AddUser(request));
         }
     }
 }

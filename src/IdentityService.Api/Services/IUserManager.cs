@@ -1,8 +1,11 @@
+using IdentityService.Api.Models;
+using IdentityService.Api.Models.Users;
+
 namespace IdentityService.Api.Services
 {
     public interface IUserManager
     {
-        string GetUser(string token);
-        string AddUser(UserRequestModel token);
+        Task<GetUserResponseModel> GetUser(GetUserRequestModel token);
+        Task AddUser(CreateUserRequestModel token);
     }
 }
