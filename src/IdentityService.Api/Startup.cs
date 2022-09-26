@@ -50,6 +50,9 @@ namespace IdentityService.Api
 
             services.AddOptions<AuthSettings>().BindConfiguration("AuthSettings");
 
+            //var authset = new AuthSettings();
+            //Configuration.GetSection("AuthSettings").Bind(authset);
+
             services.AddSingleton<ILoginStateRepository, LoginStateRepository>();
             services.AddSingleton<IAuthManagerService, AuthManagerService>();
             services.AddTransient<IUserRepository, UserRepository>();
