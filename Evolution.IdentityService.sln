@@ -7,11 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E4104712-A2F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{20210CEA-C1C2-4EFB-87F4-2DB5479882E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityService.Api", "src\IdentityService.Api\IdentityService.Api.csproj", "{E1D1FDC6-584C-413F-AB39-9F78215EABB9}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infra", "infra", "{911E798D-1174-49FB-8463-0F1AE1740D61}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{E7C0CAAA-681E-49D7-A5E0-37448D613C80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityService.Api", "src\IdentityService.Api\IdentityService.Api.csproj", "{E1D1FDC6-584C-413F-AB39-9F78215EABB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
