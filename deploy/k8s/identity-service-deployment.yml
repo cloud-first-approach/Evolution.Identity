@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identityservice-api-deployment
+  namespace: evolution
+
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identityservice-api
+  template:
+    metadata:
+      labels:
+        app: identityservice-api
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "identityservice-api"
+        dapr.io/app-port: "80"
+        dapr.io/sidecar-liveness-probe-period-seconds: "10"
+        dapr.io/sidecar-readiness-probe-period-seconds: "10"
+    spec:
+      containers:
+      - name: identityservice-api
+        image: rohitrustagi007/identityservice.api:88
+        env: 
+          - name: ASPNETCORE_ENVIRONMENT
+            value: "Development" 
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"

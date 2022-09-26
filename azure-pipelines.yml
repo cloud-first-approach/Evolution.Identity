@@ -1,0 +1,30 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+  - main
+  
+resources:
+  - repo: self
+  
+variables:
+    tag: '$(Build.BuildId)'
+  
+stages:
+  - stage: BuildIdentityService
+    displayName: Build Identity Service Image
+    jobs:
+    - job: Build
+      displayName: Build
+      pool:
+        vmImage: ubuntu-latest
+      steps:
+      - task: Docker@2
+        inputs:
+          containerRegistry: "Docker Hub Service Connection"
+          repository: 'rohitrustagi007/identityservice.api'
+          command: buildAndPush
+          dockerfile: '$(Build.SourcesDirectory)/src/IdentityService.Api/Dockerfile'
+          tags: |
+             $(tag)
