@@ -21,6 +21,10 @@ spec:
               name: rbmq-mgmt-port
             - containerPort: 5672
               name: rbmq-msg-port
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
 ---
 apiVersion: v1
 kind: Service
