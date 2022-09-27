@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-nginx-srv
+  namespace: evolution
+  annotations: 
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/use-regex: 'true'
+  labels:
+    name: identityingress  
+spec:
+  rules:
+  - host: acme.com
+    http:
+      paths:
+      - path: /identity
+        pathType: Prefix
+        backend:
+          service:
+            name: identityservice-api-cluster-ip
+            port: 
+              number: 80
+      - path: /swagger
+        pathType: Prefix
+        backend:
+          service:
+            name: identityservice-api-cluster-ip
+            port: 
+              number: 80
