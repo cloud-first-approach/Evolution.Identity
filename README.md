@@ -68,23 +68,30 @@ TODO: Guide users through getting your code up and running on their own system. 
 # Start the SQL Server for Services to Use.
 kubectl apply -f Deploy/K8S/mssql
 
-> kubectl apply -f .\deploy\dapr\redis-component.yml
+kubectl apply -f .\deploy\dapr\redis-component.yml
 
->  kubectl create ns evolution
+kubectl create ns evolution
 
->  kubectl apply -f .\deploy\k8s\
+kubectl apply -f .\deploy\k8s\
 
-> kubectl port-forward svc/identityservice-api-cluster-ip 80 -n evolution
+kubectl port-forward svc/identityservice-api-cluster-ip 80 -n evolution
 
-> kubectl get pods
+kubectl get pods
 
-> dapr run --app-id identity --app-port 1000 -- dotnet run
+
 
 ```
 
+
+```sh
 dotnet ef migrations add InitialCreate
 dotnet ef database update InitialCreate
 
 
 docker pull mcr.microsoft.com/mssql/server
 docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=password@1" -p 1433:1433 --name sql -d mcr.microsoft.com/mssql/server:2017-latest
+
+dapr run --app-id identity --app-port 1000 -- dotnet run
+dapr run --app-id identity --app-port 1000 --components-path ../../deploy/dapr/ -- dotnet run
+
+```
