@@ -1,6 +1,7 @@
 ﻿using IdentityService.Api.AppSettings;
 using IdentityService.Api.Data;
 using IdentityService.Api.Data.Repositories;
+using IdentityService.Api.Middlewares;
 using IdentityService.Api.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -83,7 +84,7 @@ namespace IdentityService.Api
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseJwtParser();
             app.UseEndpoints(
                 endpoints =>
                 {
@@ -95,6 +96,8 @@ namespace IdentityService.Api
                     endpoints.MapDefaultControllerRoute();
                 }
             );
+
+            PrepareDb.PrePoulateData(app, env);
         }
     }
 }

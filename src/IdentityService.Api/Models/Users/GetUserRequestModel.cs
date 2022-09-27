@@ -4,7 +4,6 @@ namespace IdentityService.Api.Models.Users
 {
     public class GetUserRequestModel
     {
-        [FromHeader]
-        public string? Authorization { get; set; }
+        public string? Username { get; set; }
     }
 }

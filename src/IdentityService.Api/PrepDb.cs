@@ -10,7 +10,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace IdentityService.Api
 {
-    public static class PrepareDbInitial
+    public static class PrepareDb
     {
         public static void PrePoulateData(IApplicationBuilder application, IWebHostEnvironment env)
         {
@@ -27,7 +27,7 @@ namespace IdentityService.Api
         {
             System.Console.WriteLine("Environment Variables");
             System.Console.WriteLine(env.IsProduction().ToString());
-            if (env.IsProduction())
+            if (env.IsDevelopment())
             {
                 System.Console.WriteLine("Applying Migrations Inside.");
                 identityDbContext.Database.Migrate();
@@ -41,7 +41,8 @@ namespace IdentityService.Api
                     {
                         Username = "sourabh",
                         Password = "sourabh",
-                        Id = 1,
+                        Salt = "",
+                        Registered = DateTime.Now
                     }
                 );
                 identityDbContext.SaveChanges();

@@ -45,7 +45,7 @@ namespace IdentityService.Api.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[] {
-                    new Claim(ClaimTypes.Name, username)
+                    new Claim("username", username)
                 }),
                 Issuer = _authSettings.Issuer,
                 Expires = expiry,

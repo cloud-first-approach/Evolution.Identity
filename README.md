@@ -82,6 +82,9 @@ kubectl apply -f Deploy/K8S/mssql
 
 ```
 
-
+dotnet ef migrations add InitialCreate
 dotnet ef database update InitialCreate
-dotnet ef database update 20180904195021_InitialCreate --connection your_connection_string
+
+
+docker pull mcr.microsoft.com/mssql/server
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=password@1" -p 1433:1433 --name sql -d mcr.microsoft.com/mssql/server:2017-latest
