@@ -23,7 +23,7 @@ namespace IdentityService.Api.Services
 
         public async Task<GetUserResponseModel> GetUser(GetUserRequestModel request)
         {
-            return _mapper.Map<GetUserResponseModel>(await _userRepository.GetUser(request?.Token));
+            return _mapper.Map<GetUserResponseModel>(await _userRepository.GetUser(request?.Authorization));
         }
     }
 }

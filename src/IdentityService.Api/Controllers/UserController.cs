@@ -20,7 +20,7 @@ namespace IdentityService.Api.Controllers
         }
         
         [HttpGet(Name = "GetUser")]
-        public async Task<IActionResult> Get([FromQuery]GetUserRequestModel request)
+        public async Task<IActionResult> Get([FromHeader] GetUserRequestModel request)
         {
            return Ok(_userManager.GetUser(request));
         }

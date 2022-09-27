@@ -1,7 +1,10 @@
-﻿namespace IdentityService.Api.Models.Users
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace IdentityService.Api.Models.Users
 {
     public class GetUserRequestModel
     {
-        public string? Token { get; set; }
+        [FromHeader]
+        public string? Authorization { get; set; }
     }
 }
