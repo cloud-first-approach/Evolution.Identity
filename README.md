@@ -44,10 +44,17 @@ kubectl create secret generic mssql --from-literal=SA_PASSWORD="password@1" -n e
 
 #STEP 4 (step infra on kubernetes)
 kubectl apply -k deploy/k8s/infra/overlays/dev
-kubectl delete -k deploy/k8s/infra/overlays/dev
+
 
 kubectl apply -f deploy/k8s/services
+
 kubectl port-forward svc/identityservice-api-cluster-ip 80 -n evolution
+
+
+
+kubectl delete -f deploy/k8s/services
+kubectl delete -k deploy/k8s/infra/overlays/dev
+helm uninstall redis
 
 ```
 
