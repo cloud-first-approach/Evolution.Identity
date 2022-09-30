@@ -22,7 +22,7 @@ namespace IdentityService.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            if (_env.IsDevelopment())
+            if (_env.IsProduction())
             {
                 Log.Information("using IdentityDB");
                 services.AddDbContext<IdentityDbContext>(

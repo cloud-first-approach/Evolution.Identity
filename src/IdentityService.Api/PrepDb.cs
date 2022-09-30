@@ -27,7 +27,7 @@ namespace IdentityService.Api
         {
             System.Console.WriteLine("Environment Variables");
             System.Console.WriteLine(env.IsProduction().ToString());
-            if (env.IsDevelopment())
+            if (env.IsProduction())
             {
                 System.Console.WriteLine("Applying Migrations Inside.");
                 identityDbContext.Database.Migrate();
