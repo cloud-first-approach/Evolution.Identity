@@ -4,11 +4,12 @@ on:
   push:
     branches: [main, staging, develop]
   pull_request:
-    branches: [main]
+    branches: [main, develop]
 
 jobs:
   build:
-    name: Build Identity Service
+    if: github.ref != 'refs/heads/main'
+    name: CI
     runs-on: ubuntu-latest
 
     steps:
@@ -20,16 +21,21 @@ jobs:
           dotnet-version: 6.0.x
 
       - name: Restore dependencies
+        id: dotnetrestore
         run: dotnet restore
 
-      - name: Build
+      - if: steps.dotnetrestore.outputs.exit_code == 0
+        name: Build
+        id: dotnetbuild 
         run: dotnet build --no-restore
 
-      - name: Test
+      - if: steps.dotnetbuild.outputs.exit_code == 0
+        id: dotnettest
+        name: Run Tests
         run: dotnet test --no-build --verbosity normal
 
   build-container:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && steps.dotnettest.outputs.exit_code == 0
     name: Docker Build and Publish
     runs-on: ubuntu-latest
     steps:
@@ -41,9 +47,11 @@ jobs:
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      
       - name: docker build
         run: |
           docker build ./src/IdentityService.Api -t rohitrustagi007/evo_identity:latest
+      
       - name : docker push
         run: |
           docker push rohitrustagi007/evo_identity:latest

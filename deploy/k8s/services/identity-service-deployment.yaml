@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: identityservice-api
-        image: rohitrustagi007/identityservice.api:88
+        image: rohitrustagi007/evo_identity:latest
         env: 
           - name: ASPNETCORE_ENVIRONMENT
             value: "Production" 
