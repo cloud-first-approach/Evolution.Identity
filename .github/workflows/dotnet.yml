@@ -2,31 +2,45 @@ name: .NET
 
 on:
   push:
-    branches: [ main ]
+    branches: [main, staging, develop]
+  pull_request :
+    branches: [main]
 
 jobs:
   build:
-
+    
+    name: Build Identity Service
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    
-    # - name: Setup .NET 5.0
-    #   uses: actions/setup-dotnet@v2
-    #   with:
-    #     dotnet-version: 5.0.x
+      - uses: actions/checkout@v3
 
-    - name: Setup .NET 6.0
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: 6.0.x
-        
-    - name: Restore dependencies
-      run: dotnet restore
-      
-    - name: Build
-      run: dotnet build --no-restore
-      
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      - name: Setup .NET 6.0
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+
+  build-container:
+    if: github.ref == 'refs/heads/main'
+    name: Build Container Image for Identity Service API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Publish to Github
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+          registry: docker.pkg.github.com
+          repository: ${{github.repository}}/next
+          tags: latest,${{github.run_number}}
