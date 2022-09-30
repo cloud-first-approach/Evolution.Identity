@@ -30,17 +30,26 @@ jobs:
         run: dotnet test --no-build --verbosity normal
 
   build-container:
-    if: github.ref == 'refs/heads/main'
-    name: Build Container Image for Identity Service API
+    name: Build Identity Service
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
-      - name: Publish to Github
-        uses: docker/build-push-action@v1
-        with:
-          username: ${{github.actor}}
-          password: ${{secrets.GITHUB_TOKEN}}
-          registry: docker.pkg.github.com
-          repository: ${{github.repository}}/next
-          tags: latest,${{github.run_number}}
+      - name: docker build
+        run: |
+          docker build ./src/IdentityService.Api -t rohitrustagi007/evo_identity:latest
+
+
+  # build-container:
+  #   if: github.ref == 'refs/heads/main'
+  #   name: Build Container Image for Identity Service API
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout Repo
+  #       uses: actions/checkout@v3
+  #     - name: Publish to Github
+  #       uses: docker/build-push-action@v1
+  #       with:
+  #         username: ${{github.actor}}
+  #         password: ${{secrets.GITHUB_TOKEN}}
+  #         registry: docker.pkg.github.com
+  #         repository: ${{github.repository}}/next
+  #         tags: latest,${{github.run_number}}
