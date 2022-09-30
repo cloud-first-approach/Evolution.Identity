@@ -33,6 +33,7 @@ jobs:
     name: Build Identity Service
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: docker build
         run: |
           docker build ./src/IdentityService.Api -t rohitrustagi007/evo_identity:latest
