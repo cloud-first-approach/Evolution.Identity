@@ -46,7 +46,7 @@ jobs:
           docker build ./src/IdentityService.Api -t rohitrustagi007/evo_identity:latest
       - name : docker push
         run: |
-          docker push
+          docker push rohitrustagi007/evo_identity:latest
 
   # build-container:
   #   if: github.ref == 'refs/heads/main'
