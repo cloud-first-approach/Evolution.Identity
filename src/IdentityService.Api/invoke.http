@@ -6,8 +6,8 @@ GET https://acme.com/topics/1 HTTP/1.1
 
 
 ###
-GET https://acme.com/basic-auth/user/passwd HTTP/1.1
-Authorization: Basic user:passwd
+GET http://acme.com/uploads/video?key=files/emf3dwde.sx2.mp4 HTTP/1.1
+
 
 ###
 
