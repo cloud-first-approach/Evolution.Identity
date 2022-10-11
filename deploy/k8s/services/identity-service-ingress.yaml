@@ -13,7 +13,7 @@ spec:
   - host: acme.com
     http:
       paths:
-      - path: /identity
+      - path: /auth/connect/token
         pathType: Prefix
         backend:
           service:
