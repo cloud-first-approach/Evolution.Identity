@@ -6,4 +6,5 @@ resources:
   - identity-api-deployment.yaml
   - identity-api-service.yaml
   - identity-api-ingress.yaml
+  - hpa.yaml
 
