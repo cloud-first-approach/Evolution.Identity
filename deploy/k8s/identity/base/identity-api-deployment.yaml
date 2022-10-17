@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity-api-deployment
+  namespace: evolution
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identity-api
+  template:
+    metadata:
+      labels:
+        app: identity-api
+    spec:
+      containers:
+      - name: identity-api
+        image: rohitrustagi007/evo_identity:latest
+
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"

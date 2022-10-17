@@ -38,16 +38,6 @@ namespace IdentityService.Api
                 );
             }
 
-            // services.AddDaprClient();
-            //services.AddHttpClient("dapr", c =>
-            //{
-            //    c.BaseAddress = new Uri("http://localhost:3500");
-            //    c.DefaultRequestHeaders.Add("User-Agent", typeof(Program).Assembly.GetName().Name);
-            //});
-
-            // Token Generation Service
-
-
 
             services.AddOptions<AuthSettings>().BindConfiguration("AuthSettings");
 
