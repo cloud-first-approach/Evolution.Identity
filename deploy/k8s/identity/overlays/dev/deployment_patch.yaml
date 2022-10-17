@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       app: identity-api
-  replicas: 3
+  replicas: 2
   template:
     metadata:
       annotations:
