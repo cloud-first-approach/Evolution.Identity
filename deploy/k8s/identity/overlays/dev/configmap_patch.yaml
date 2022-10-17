@@ -6,5 +6,5 @@ metadata:
 data:
   config.json: |
     {
-      "environment": "dev"
+      "environment": "tt"
     }
