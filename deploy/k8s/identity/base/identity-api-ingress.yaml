@@ -15,7 +15,7 @@ spec:
   - host: evolution.k8
     http:
       paths:
-      - path: /auth/connect/token
+      - path: /auth
         pathType: Prefix
         backend:
           service:
