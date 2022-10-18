@@ -21,11 +21,11 @@ spec:
           service:
             name: identity-api-cluster-ip
             port: 
-              number: 80
+              number: 1001
       - path: /swagger
         pathType: Prefix
         backend:
           service:
             name: identity-api-cluster-ip
             port: 
-              number: 80
+              number: 1001
