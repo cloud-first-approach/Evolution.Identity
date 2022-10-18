@@ -10,7 +10,7 @@ metadata:
     name: identity-nginx-ingress  
 spec:
   rules:
-  - host: acme.com
+  - host: identity.k8
     http:
       paths:
       - path: /auth/connect/token
