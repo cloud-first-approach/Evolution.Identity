@@ -6,9 +6,9 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: identityservice-api
+    app: identity-api
   ports:
-  - name: identityservice-api-port
+  - name: identity-api-port
     protocol: TCP
     port: 80
     targetPort: 80
