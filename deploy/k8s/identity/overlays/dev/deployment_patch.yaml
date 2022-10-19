@@ -9,11 +9,11 @@ spec:
       app: identity-api
   replicas: 1
   template:
-    # metadata:
-      # annotations:
-        # dapr.io/enabled: "true"
-        # dapr.io/app-id: "identity"
-        # dapr.io/app-port: "80"
+    metadata:
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "identity"
+        dapr.io/app-port: "80"
         # dapr.io/config: "tracing"
     spec:
       containers:
