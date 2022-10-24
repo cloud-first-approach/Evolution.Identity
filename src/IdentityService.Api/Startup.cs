@@ -1,4 +1,5 @@
-﻿using IdentityService.Api.AppSettings;
+﻿using Duende.IdentityServer.Models;
+using IdentityService.Api.AppSettings;
 using IdentityService.Api.Data;
 using IdentityService.Api.Data.Repositories;
 using IdentityService.Api.Middlewares;
@@ -15,7 +16,31 @@ namespace IdentityService.Api
             Configuration = configuration;
             _env = env;
         }
+        public static IEnumerable<ApiScope> ApiScopes =>
+    new List<ApiScope>
+    {
+        new ApiScope(name: "api1", displayName: "MyAPI")
+    };
+        public static IEnumerable<Client> Clients =>
+    new List<Client>
+    {
+        new Client
+        {
+            ClientId = "client",
 
+            // no interactive user, use the clientid/secret for authentication
+            AllowedGrantTypes = GrantTypes.ClientCredentials,
+
+            // secret for authentication
+            ClientSecrets =
+            {
+                new Secret("secret".Sha256())
+            },
+
+            // scopes that client has access to
+            AllowedScopes = { "api1" }
+        }
+    };
         public IConfiguration Configuration { get; }
 
         private IWebHostEnvironment _env { get; }
@@ -38,6 +63,9 @@ namespace IdentityService.Api
                 );
             }
 
+            services.AddIdentityServer()
+           .AddInMemoryApiScopes(ApiScopes)
+           .AddInMemoryClients(Clients);
 
             services.AddOptions<AuthSettings>().BindConfiguration("AuthSettings");
 
@@ -71,7 +99,7 @@ namespace IdentityService.Api
 
             //app.UseHttpsRedirection();
             app.UseRouting();
-
+            app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseJwtParser();
