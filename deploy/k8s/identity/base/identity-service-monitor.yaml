@@ -3,11 +3,12 @@ kind: ServiceMonitor
 metadata:
   labels:
   name: identity-api
-  namespace: monitoring
+  namespace: evolution
 spec:
   endpoints:
   - interval: 30s
     port: identity-api-port
+    path: /metrics-text
   selector:
     matchLabels:
       app: identity-api
