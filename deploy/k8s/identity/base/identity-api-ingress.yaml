@@ -1,16 +1,15 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: identity-nginx-ingress
+  name: identity-api
   namespace: evolution
   annotations: 
-      # kubernetes.io/ingress.class: nginx
+      kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/use-regex: 'true'
       nginx.org/mergeable-ingress-type: "minion"
   labels:
-    name: identity-nginx-ingress  
+    name: identity-api
 spec:
-  ingressClassName: nginx
   rules:
   - host: evolution.k8
     http:
