@@ -16,31 +16,7 @@ namespace IdentityService.Api
             Configuration = configuration;
             _env = env;
         }
-        public static IEnumerable<ApiScope> ApiScopes =>
-    new List<ApiScope>
-    {
-        new ApiScope(name: "api1", displayName: "MyAPI")
-    };
-        public static IEnumerable<Client> Clients =>
-    new List<Client>
-    {
-        new Client
-        {
-            ClientId = "client",
 
-            // no interactive user, use the clientid/secret for authentication
-            AllowedGrantTypes = GrantTypes.ClientCredentials,
-
-            // secret for authentication
-            ClientSecrets =
-            {
-                new Secret("secret".Sha256())
-            },
-
-            // scopes that client has access to
-            AllowedScopes = { "api1" }
-        }
-    };
         public IConfiguration Configuration { get; }
 
         private IWebHostEnvironment _env { get; }
@@ -62,15 +38,20 @@ namespace IdentityService.Api
                     optionsAction: options => options.UseInMemoryDatabase("InMemDB")
                 );
             }
-
-            services.AddIdentityServer()
-           .AddInMemoryApiScopes(ApiScopes)
-           .AddInMemoryClients(Clients);
+            var authset = new AuthSettings();
+            Configuration.GetSection("AuthSettings").Bind(authset);
+            services.AddIdentityServer(option =>
+            {
+                option.IssuerUri = authset.Issuer;
+            })
+            .AddInMemoryClients(Config.Clients)
+            .AddInMemoryIdentityResources(Config.IdentityResources)
+            .AddInMemoryApiResources(Config.ApiResources)
+            .AddInMemoryApiScopes(Config.ApiScopes);
 
             services.AddOptions<AuthSettings>().BindConfiguration("AuthSettings");
 
-            //var authset = new AuthSettings();
-            //Configuration.GetSection("AuthSettings").Bind(authset);
+
 
             services.AddScoped<ILoginStateRepository, LoginStateRepository>();
             services.AddScoped<IAuthManagerService, AuthManagerService>();
@@ -87,7 +68,7 @@ namespace IdentityService.Api
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
-        
+
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
