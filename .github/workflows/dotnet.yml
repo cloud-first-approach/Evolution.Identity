@@ -21,6 +21,11 @@ jobs:
           echo ${{ github.run_number  }}
           echo ${{ github.run_attempt  }}
 
+      - name: Get the version
+        id: vars
+        run: |
+          echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
+
       - name: Setup .NET 6.0
         uses: actions/setup-dotnet@v2
         with:
@@ -53,10 +58,15 @@ jobs:
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-      
+
+      - name: Get the version
+        id: vars
+        run: |
+          echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
+
       - name: docker build
         run: |
-          docker build ./src/IdentityService.Api -t rohitrustagi007/evo_identity:latest
+          docker build ./src/IdentityService.Api -t rohitrustagi007/evo_identity:${{steps.vars.outputs.tag}}
       
       - name : docker push
         run: |
