@@ -66,6 +66,8 @@ namespace IdentityService.Api
             services.AddControllersWithViews();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddHealthChecks();
         }
 
 
@@ -95,7 +97,8 @@ namespace IdentityService.Api
                     endpoints.MapDefaultControllerRoute();
                 }
             );
-
+            app.UseHealthChecks("/health");
+            app.UseHealthChecks("/healthz");
             PrepareDb.PrePoulateData(app, env);
         }
     }
