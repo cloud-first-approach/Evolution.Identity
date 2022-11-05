@@ -15,17 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
-      - name: check build
+      - name: Check Numbers
         run: |
           echo ${{ github.run_id }}
           echo ${{ github.run_number  }}
           echo ${{ github.run_attempt  }}
-          echo ${{ GITHUB_REF }}
-          
-      - name: Get the version
-        id: vars
-        run: |
-          echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
 
       - name: Setup .NET 6.0
         uses: actions/setup-dotnet@v2
@@ -60,18 +54,19 @@ jobs:
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
-      - name: Get the version
-        id: vars
+      - name: Check Numbers
         run: |
-          echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
+          echo ${{ github.run_id }}
+          echo ${{ github.run_number  }}
+          echo ${{ github.run_attempt  }}
 
       - name: docker build
         run: |
-          docker build ./src/IdentityService.Api -t rohitrustagi007/evo_identity:${{steps.vars.outputs.tag}}
+          docker build ./src/IdentityService.Api -t rohitrustagi007/evo_identity:${{ github.run_number  }}
       
       - name : docker push
         run: |
-          docker push rohitrustagi007/evo_identity:latest
+          docker push rohitrustagi007/evo_identity:${{ github.run_number  }}
       
 
   # build-container:
