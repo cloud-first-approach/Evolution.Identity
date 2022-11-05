@@ -18,7 +18,7 @@ namespace IdentityService.Api.Data.Repositories
 
         public async Task<User?> GetUser(string username)
         {
-            var user = await Task.Run(() => dbcontext.Users.FirstOrDefault(user => user.Username == username));
+            var user = dbcontext.Users.FirstOrDefault(user => user.Username == username);
             return user;
         }
     }

@@ -7,5 +7,6 @@ resources:
   - identity-api-service.yaml
   - identity-api-ingress.yaml
   - hpa.yaml
+  - identity-service-monitor.yaml
 
 

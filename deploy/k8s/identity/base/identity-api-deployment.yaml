@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: identity-api-deployment
   namespace: evolution
+  labels:
+    app: identity-api
 spec:
   replicas: 1
   selector:

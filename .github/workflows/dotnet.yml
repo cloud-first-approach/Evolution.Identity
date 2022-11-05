@@ -14,6 +14,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      
+      - name: Check Numbers
+        run: |
+          echo ${{ github.run_id }}
+          echo ${{ github.run_number  }}
+          echo ${{ github.run_attempt  }}
 
       - name: Setup .NET 6.0
         uses: actions/setup-dotnet@v2
@@ -47,14 +53,21 @@ jobs:
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-      
+
+      - name: Check Numbers
+        run: |
+          echo ${{ github.run_id }}
+          echo ${{ github.run_number  }}
+          echo ${{ github.run_attempt  }}
+
       - name: docker build
         run: |
-          docker build ./src/IdentityService.Api -t rohitrustagi007/evo_identity:latest
+          docker build ./src/IdentityService.Api -t rohitrustagi007/evo_identity:${{ github.run_number  }}
       
       - name : docker push
         run: |
-          docker push rohitrustagi007/evo_identity:latest
+          docker push rohitrustagi007/evo_identity:${{ github.run_number  }}
+      
 
   # build-container:
   #   if: github.ref == 'refs/heads/main'

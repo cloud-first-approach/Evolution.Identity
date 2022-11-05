@@ -1,4 +1,5 @@
-﻿using IdentityService.Api.AppSettings;
+﻿using Duende.IdentityServer.Models;
+using IdentityService.Api.AppSettings;
 using IdentityService.Api.Data;
 using IdentityService.Api.Data.Repositories;
 using IdentityService.Api.Middlewares;
@@ -37,12 +38,20 @@ namespace IdentityService.Api
                     optionsAction: options => options.UseInMemoryDatabase("InMemDB")
                 );
             }
-
+            var authset = new AuthSettings();
+            Configuration.GetSection("AuthSettings").Bind(authset);
+            services.AddIdentityServer(option =>
+            {
+                option.IssuerUri = authset.Issuer;
+            })
+            .AddInMemoryClients(Config.Clients)
+            .AddInMemoryIdentityResources(Config.IdentityResources)
+            .AddInMemoryApiResources(Config.ApiResources)
+            .AddInMemoryApiScopes(Config.ApiScopes);
 
             services.AddOptions<AuthSettings>().BindConfiguration("AuthSettings");
 
-            //var authset = new AuthSettings();
-            //Configuration.GetSection("AuthSettings").Bind(authset);
+
 
             services.AddScoped<ILoginStateRepository, LoginStateRepository>();
             services.AddScoped<IAuthManagerService, AuthManagerService>();
@@ -59,7 +68,7 @@ namespace IdentityService.Api
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
-        
+
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -71,7 +80,7 @@ namespace IdentityService.Api
 
             //app.UseHttpsRedirection();
             app.UseRouting();
-
+            app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseJwtParser();

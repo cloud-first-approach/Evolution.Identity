@@ -14,9 +14,9 @@ namespace IdentityService.Api.Controllers
             _jwtAuthManagerService = jwtAuthManagerService;
         }
         [HttpPost("connect/token")]
-        public IActionResult Authenticate(AuthenticateRequestModel requestModel)
+        public async Task<IActionResult> Authenticate(AuthenticateRequestModel requestModel)
         {
-           var authResponse =  _jwtAuthManagerService.Authenticate(requestModel.Username, requestModel.Password);
+           var authResponse =  await _jwtAuthManagerService.Authenticate(requestModel.Username, requestModel.Password);
             if (authResponse is null)
                 return Unauthorized();
             else
