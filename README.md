@@ -35,7 +35,7 @@ dapr run --app-port 1000 --app-id processor --app-protocol http --dapr-http-port
 ```sh
 #spin up the infra
 #from https://github.com/cloud-first-approach/Evolution.infra/tree/main/deploy/k8s/infra/overlays/dev
-kubectl apply -k deploy/k8s/infra/overlays/dev
+kubectl apply -k Evolution.Identity/deploy/k8s/identity/overlays/dev
 
 #deploy the service
 kubectl apply -k ./deploy/k8s/identity/overlays/dev -n evolution
