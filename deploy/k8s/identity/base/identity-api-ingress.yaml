@@ -21,6 +21,13 @@ spec:
             name: identity-api-cluster-ip
             port: 
               number: 80
+      - path: /connect
+        pathType: Prefix
+        backend:
+          service:
+            name: identity-api-cluster-ip
+            port: 
+              number: 80
       - path: /swagger
         pathType: Prefix
         backend:
