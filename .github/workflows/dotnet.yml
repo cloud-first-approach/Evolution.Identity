@@ -14,6 +14,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      
+      - name: check build
+        run: |
+          echo ${{ github.run_id }}
+          echo ${{ github.run_number  }}
+          echo ${{ github.run_attempt  }}
 
       - name: Setup .NET 6.0
         uses: actions/setup-dotnet@v2
@@ -55,6 +61,7 @@ jobs:
       - name : docker push
         run: |
           docker push rohitrustagi007/evo_identity:latest
+      
 
   # build-container:
   #   if: github.ref == 'refs/heads/main'
