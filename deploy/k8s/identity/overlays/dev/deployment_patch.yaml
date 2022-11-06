@@ -15,10 +15,15 @@ spec:
         dapr.io/app-id: "identity"
         dapr.io/app-port: "80"
         dapr.io/config: "tracing"
+        linkerd.io/inject: enabled
     spec:
       containers:
         - name: identity-api
+          image: rohitrustagi007/evo_identity:latest
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
           env: 
           - name: ASPNETCORE_ENVIRONMENT
             value: "Development" 
-    
