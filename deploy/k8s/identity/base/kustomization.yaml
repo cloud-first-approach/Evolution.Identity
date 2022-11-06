@@ -8,5 +8,6 @@ resources:
   - identity-api-ingress.yaml
   - hpa.yaml
   - identity-service-monitor.yaml
+  - canary.yaml
 
 
